@@ -1,11 +1,8 @@
 ## [Vitest](https://vitest.dev/)
 
 ```shell
-$ quasar ext add @quasar/testing-unit-vitest@beta
+$ quasar ext add @quasar/testing-unit-vitest
 ```
-
-> This package is in **beta** phase. The public API is unlikely to change much before the stable release.
-> It will be released as stable once `@quasar/app-vite@v2` will hit a stable release.
 
 This App Extension (AE) manages Quasar and Vitest integration for you, both for JavaScript and TypeScript.
 
@@ -31,7 +28,7 @@ All changes are related to Vitest v1.0 breaking changes, Quasar first-party help
 - Upgrade all Vitest related dependencies, especially `@vue/test-utils`, `vitest` and `@vitest/ui`, which minimum peer dependencies versions has been bumped. If you don't want to upgrade these dependencies manually, you can just re-install the AE and it will update all dependencies for you;
 - (**optional**) Upgrade `vue` and `quasar` dependencies to the latest version;
 - Rename `vitest.config.[js|ts]` to `vitest.config.[mjs|mts]` or switch your project to "ESM by default" adding `"type": "module"` option in `package.json`. Check out [here](https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated) why CJS build and syntax are deprecated in Vite 5;
-- Vitest 1.0 requires Vite 5, thus you'll need to upgrade `@quasar/app-vite` to v2 (currently in alpha stage). If you can't migrate away from v1 yet, you can use this [workaround](https://github.com/quasarframework/quasar/issues/14077#issuecomment-1851463530) until you can migrate. We do test against the setup using that workaround, to ease the migration, but bear in mind that we don't consider it as "officially supported" and we will stop testing against it in the near future;
+- Vitest 1.0 requires Vite 5, thus you'll need to upgrade `@quasar/app-vite` to v2 (currently in beta stage). If you can't migrate away from v1 yet, you can use this [workaround](https://github.com/quasarframework/quasar/issues/14077#issuecomment-1851463530) until you can migrate. We do test against the setup using that workaround, to ease the migration, but bear in mind that we don't consider it as "officially supported" and we will stop testing against it in the near future;
 - Follow Vitest [upgrade guide](https://vitest.dev/guide/migration.html#migrating-from-vitest-0-34-6) to upgrade from Vitest v34.6 to v1.0
 
 ### installQuasarPlugin(options)
@@ -78,7 +75,6 @@ await findSelect().vm.$emit('update:model-value', 'a choice');
 
 For QTooltip and other components existing in a specific Quasar div, they cant be analysed by vitest.
 
-
 ### QIcon
 
 When mounted, a QIcon fetch the image corresponding to his name. But if you use materialize extra and dont inject it in Quasar test instance, that can be simplier to test directly for text of QIcon
@@ -86,12 +82,12 @@ When mounted, a QIcon fetch the image corresponding to his name. But if you use 
 ```ts
 expect(findCloseButton().text()).toBe('close');
 ```
+
 ### Snapshot
 
 When using Snapshot, keep in mind that some Quasar component generate UIDs that can break snapshot.
 Most of the time, adding a for attribute to the component fix the generated snapshot.
 But if this is not working (for example for QBtnDropDown), you can also stub the component in order to fix the snapshot.
-
 
 ### Caveats
 
