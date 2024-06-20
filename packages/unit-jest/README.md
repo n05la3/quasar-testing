@@ -2,15 +2,13 @@
 
 > **[Jest isn't compatible with Vite](https://github.com/quasarframework/quasar-testing/issues/244#issuecomment-1293671738)**, if you use `@quasar/app-vite` and you need unit testing, you should use [Vitest](../unit-vitest/README.md) instead.
 
-> This package is in **beta** phase. The public API shouldn't change before the stable release.
-
 > **We're looking for a maintainer!**
 > Currently no one in the Quasar team is using Jest in his day-to-day life, thus we miss many use cases and the DX is suboptimal.
 > We're looking for someone who is using it and would like to help us maintain this package.
 > **If you're interested, please reach out on [Discord](https://chat.quasar.dev/)**
 
 ```shell
-$ quasar ext add @quasar/testing-unit-jest@beta
+$ quasar ext add @quasar/testing-unit-jest
 ```
 
 Add into your `.eslintrc.js` the following code:
@@ -108,9 +106,9 @@ You can choose to install [Majestic](https://github.com/Raathigesh/majestic), wh
 > This package had a long alpha phase due to narrow bandwidth on Quasar team to care about it as much as it was needed.
 > When the first alpha release took place the active Jest version was v26, while at the time of the beta release it bumped to v29.
 > We decided to update directly to Jest v29 before releasing the beta of this package.
-> The suggested path to migrate projects using v3 alpha release of this package is to re-read and apply the migration guide which has been updated to account for new changes.
+> The suggested path to migrate projects using v3 alpha or beta releases of this package is to re-read and apply the migration guide which has been updated to account for new changes.
 
-Alternatively to the following guide, a faster way for advanced developers would be to run `yarn quasar ext add @quasar/testing-unit-jest@beta` and `yarn add -D jest @vue/test-utils eslint-plugin-jest@latest`, then let the package scaffold new files overriding the existing ones and manually merge your changes into the generated files. Ensure to have version control in place to be able to revert if needed. Even in this case, we suggest to take a look to the following migration guide and use it as a checklist, as some files must be renamed/removed.
+Alternatively to the following guide, a faster way for advanced developers would be to run `yarn quasar ext add @quasar/testing-unit-jest` and `yarn add -D jest @vue/test-utils eslint-plugin-jest@latest`, then let the package scaffold new files overriding the existing ones and manually merge your changes into the generated files. Ensure to have version control in place to be able to revert if needed. Even in this case, we suggest to take a look to the following migration guide and use it as a checklist, as some files must be renamed/removed.
 
 **Please note that Jest v29 requires Node v14, thus this package can only be used with Node 14 or higher.**
 
@@ -119,7 +117,7 @@ Alternatively to the following guide, a faster way for advanced developers would
 We adapted to the ecosystem shift towards externalizing dependencies, we now manage supported versions of third parties packages via peerDependencies.
 Run `yarn add -D jest @vue/test-utils` to install previously bundled dependencies.
 
-Run `yarn add -D @quasar/quasar-app-extension-testing-unit-jest@beta eslint-plugin-jest@latest` to upgrade dependencies which were already externalized.
+Run `yarn add -D @quasar/quasar-app-extension-testing-unit-jest eslint-plugin-jest@latest` to upgrade dependencies which were already externalized.
 
 Here are some resources which you should read, adapting your tests accordingly:
 
