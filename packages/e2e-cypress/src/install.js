@@ -133,6 +133,8 @@ module.exports = async function (api) {
   }
 
   if (await api.hasLint()) {
-    api.onExitLog('Check out https://github.com/quasarframework/quasar-testing/tree/dev/packages/e2e-cypress to see how to add proper Cypress linting configuration to your project.');
+    api.onExitLog(
+      'Check out https://github.com/quasarframework/quasar-testing/tree/dev/packages/e2e-cypress to see how to add proper Cypress linting configuration to your project.',
+    );
   }
 };

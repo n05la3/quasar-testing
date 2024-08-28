@@ -62,7 +62,9 @@ module.exports = async function (api) {
 
   api.render('./templates/base', {}, true);
 
-  api.render(`./templates/${await api.hasTypescript() ? '' : 'no-'}typescript`);
+  api.render(
+    `./templates/${(await api.hasTypescript()) ? '' : 'no-'}typescript`,
+  );
 
   if (api.prompts.options.includes('majestic')) {
     const majestic = {

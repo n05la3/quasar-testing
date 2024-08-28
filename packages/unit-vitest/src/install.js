@@ -60,7 +60,9 @@ module.exports = async function (api) {
   // See https://github.com/quasarframework/quasar/issues/14077
   api.compatibleWith('@quasar/app-vite', '^1.6.0 || ^2.0.0-alpha.44');
 
-  api.render(`./templates/${await api.hasTypescript() ? '' : 'no-'}typescript`);
+  api.render(
+    `./templates/${(await api.hasTypescript()) ? '' : 'no-'}typescript`,
+  );
 
   if (api.prompts.options.includes('ui')) {
     const ui = {
