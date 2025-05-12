@@ -1,15 +1,19 @@
 {
   "@quasar/testing-unit-vitest": {
-    "options": ["ui"]
+    "options": [
+      "ui"
+    ]
   },
   "@quasar/testing-e2e-cypress": {
     "port": 8080,
-    "options": ["code-coverage"]
+    "options": [
+      "code-coverage"
+    ]
   },
   "@quasar/testing-e2e-playwright": {
     "port": 8080,
-    "githubWorkflow": "y/N",
-    "installBrowsers": "y/N",
-    "enableCodeCoverage": "y/N"
+    "githubWorkflow": true,
+    "installBrowsers": false,
+    "enableCodeCoverage": true
   }
 }

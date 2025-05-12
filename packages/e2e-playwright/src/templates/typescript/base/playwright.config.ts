@@ -5,7 +5,7 @@ import { defineConfig, devices, PlaywrightTestConfig } from '@playwright/test';
  * https://github.com/motdotla/dotenv
  */
 // import dotenv from 'dotenv';
-// import path fromgit reset HEAD~1 'path';
+// import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
