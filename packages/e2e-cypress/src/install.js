@@ -6,7 +6,7 @@
 
 const { appendFileSync } = require('fs');
 const { join } = require('path');
-const { enforcedDevServerPort } = require('./shared');
+const { enforcedDevServerPort, enforcedCypress15Vite8Compatibility } = require('./shared');
 
 /**
  * Performs a deep merge of objects and returns new object. Does not modify
@@ -61,13 +61,17 @@ let extendPackageJson = {
 
 // TODO: remove this and roll back to use `getCompatibleDevDependencies` for next Cypress AE major version,
 // which will drop support for ESLint v8 and require a migration of this monorepo to ESLint v9
+// TODO: note that in this monorepo ESLint v8 is used at root level, but test projects use ESLint v9
+// This breaks the resolution logic of `api.hasPackage('eslint', '^9.0.0')` in the context of the AE install script within test projects
+// You'll need to manually set `eslint-plugin-cypress` to v4 in that case when running `sync:invoke:cypress` script
 function getEslintPluginCypressDependency(api) {
   return {
     devDependencies: {
       // eslint-plugin-cypress v3 doesn't support ESLint v9 and eslint-plugin-cypress v4 only supports ESLint v9,
       // So if the user has ESLint v9 installed, then we will scaffold with eslint-plugin-cypress v4, otherwise we will use v3
+      // We cannot use v5.x of eslint-plugin-cypress because it drops support for non-flat ESLint configs
       'eslint-plugin-cypress': api.hasPackage('eslint', '^9.0.0')
-        ? '^4.2.1'
+        ? '^4.3.0'
         : '^3.6.0',
     },
   };
@@ -78,6 +82,8 @@ module.exports = async function (api) {
   if (api.hasVite) {
     // PromptsAPI and hasTypescript are only available from v1.6.0 onwards
     api.compatibleWith('@quasar/app-vite', '^v1.6.0 || ^2.0.0');
+
+    enforcedCypress15Vite8Compatibility(api);
   } else if (api.hasWebpack) {
     // PromptsAPI and hasTypescript are only available from v3.11.0 onwards
     api.compatibleWith('@quasar/app-webpack', '^3.11.0 || ^4.0.0');
