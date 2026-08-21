@@ -93,7 +93,7 @@ $ quasar ext invoke @quasar/testing-unit-jest
 You can upgrade a testing harness and its dependencies by updating its related NPM package.
 
 ```
-$ yarn add -D @quasar/quasar-app-extension-testing-unit-jest
+$ pnpm add -D @quasar/quasar-app-extension-testing-unit-jest
 ```
 
 This won't change existing test or configuration files.
@@ -173,6 +173,7 @@ The `Lighthouse` tool can help you identify issues with your PWA app, but only i
 
 Contributions to this repository are highly desirable, see the [Contribution Guidelines](./.github/CONTRIBUTING.md) for more details.
 Please note: project coordination takes place on the [Discord server](https://discord.gg/5TDhbDg).
+This monorepo is managed with pnpm: run `pnpm install` at the repo root (Node.js >= 22.22) before developing. The App Extensions are tested against the `test-vite-app-v3` (Vite) and `test-webpack-app-v4` (Webpack) projects in this repo.
 
 ## Contributors
 

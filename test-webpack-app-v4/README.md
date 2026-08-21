@@ -5,7 +5,7 @@ A Quasar Project
 ## Install the dependencies
 
 ```bash
-yarn
+pnpm install
 # or
 npm install
 ```
@@ -19,7 +19,7 @@ quasar dev
 ### Lint the files
 
 ```bash
-yarn lint
+pnpm lint
 # or
 npm run lint
 ```
@@ -27,7 +27,7 @@ npm run lint
 ### Format the files
 
 ```bash
-yarn format
+pnpm format
 # or
 npm run format
 ```

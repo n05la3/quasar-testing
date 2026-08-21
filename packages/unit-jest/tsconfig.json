@@ -2,7 +2,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
-    "module": "commonjs"
+    "module": "commonjs",
+    "moduleResolution": "node10",
+    "skipLibCheck": true
   },
   "include": ["src/helpers"]
 }

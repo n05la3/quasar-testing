@@ -23,4 +23,12 @@ export default {
       },
     ],
   },
+  transformIgnorePatterns: [
+    `node_modules/.pnpm/(?!(${quasarEsModulesPackageNames})@)`,
+  ],
+  moduleNameMapper: {
+    '^@vue/test-utils$': '<rootDir>/node_modules/@vue/test-utils',
+    '^@jest/globals$': '<rootDir>/node_modules/@jest/globals',
+    '^vue$': '<rootDir>/node_modules/vue',
+  },
 };

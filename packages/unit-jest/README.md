@@ -319,7 +319,7 @@ Alternatively you can use `jest --watchAll`, but be aware there will be a perfor
 ### Testing the AE
 
 ```sh
-cd test-project-webpack # or "cd test-project-app"
-yarn sync:jest # or "yarn sync:all", if it's the first time you run this command
-yarn test:unit:ci # check if unit tests still work with the local version of the AE
+cd test-webpack-app-v4
+pnpm sync:jest # or "pnpm sync:all", if it's the first time you run this command
+pnpm test:unit:ci # check if unit tests still work with the local version of the AE
 ```

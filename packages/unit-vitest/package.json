@@ -13,10 +13,10 @@
   },
   "scripts": {
     "build": "rimraf dist && tsc --declaration --declarationDir dist/types",
-    "build:local": "yarn install && yarn build && rimraf node_modules",
-    "deploy:alpha": "yarn build && yarn publish --tag alpha",
-    "deploy:beta": "yarn build && yarn publish --tag beta",
-    "deploy:latest": "yarn build && yarn publish --tag latest"
+    "build:local": "pnpm install --ignore-workspace && pnpm build && rimraf node_modules",
+    "deploy:alpha": "pnpm build && pnpm publish --tag alpha",
+    "deploy:beta": "pnpm build && pnpm publish --tag beta",
+    "deploy:latest": "pnpm build && pnpm publish --tag latest"
   },
   "publishConfig": {
     "access": "public"
@@ -24,9 +24,8 @@
   "main": "dist/main.js",
   "typings": "dist/types/main.d.ts",
   "engines": {
-    "node": "^30 || ^28 || ^26 || ^24 || ^22 || ^20 || ^18",
-    "npm": ">= 9.5",
-    "yarn": ">= 1.22.19"
+    "node": "^30 || ^28 || ^26 || ^24 || ^22.22.0",
+    "npm": ">= 9.5"
   },
   "dependencies": {
     "happy-dom": "^15.0.0",

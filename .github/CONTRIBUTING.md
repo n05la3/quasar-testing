@@ -76,16 +76,16 @@ We'll try to help you getting started and link your integration on this README :
 Use the Quasar CLI to create a new Quasar project to test out the changes you'll be doing on testing packages, eg. `quasar create my-example-project`
 
 Fork this monorepo and clone it locally via `git clone https://github.com/<YOUR-GITHUB-HANDLE>/quasar-testing.git`
-Move into the monorepo folder (`cd quasar-testing`) and run `yarn install` at root level
+Move into the monorepo folder (`cd quasar-testing`) and run `pnpm install` at root level (Node.js >= 22.22)
 Move into the package you're interested into, eg `cd packages/unit-jest`, and start hacking!
 When you're ready to test your changes:
 
-- run `yarn build`, if that package has a build step
-- run `rm -rf node_modules`, to avoid undebuggable runtime errors due to dependency chain pollution. See https://github.com/yarnpkg/yarn/issues/2822 for more info, remember to rerun `yarn install` when coming back for more changes
+- run `pnpm --dir ../packages/unit-jest build`, if that package has a build step
+- run `rm -rf node_modules` to start fresh, remember to rerun `pnpm install` when coming back for more changes
 
 Then move to your example project (**it must be OUTSIDE `quasar-testing` folder**):
 
-- install the dependency locally, eg. `yarn add -D <path of testing repo>/packages/unit-jest`
+- install the dependency locally, eg. `pnpm add -D <path of testing repo>/packages/unit-jest`
 - invoke the AE to trigger the installation process, eg. `quasar ext invoke @quasar/testing-unit-jest`. You can skip this if you didn't change anything into `prompts.js` and `install.js` AE files
 - try out the new features you added!
 
@@ -94,4 +94,4 @@ Then move to your example project (**it must be OUTSIDE `quasar-testing` folder*
 All folders inside `packages` folder represent a single testing App Extension.
 Please check out AEs [introduction](https://quasar.dev/app-extensions/introduction) and [development guide](https://quasar.dev/app-extensions/development-guide/introduction) for minimum knownledge on how to work with them and their folder structure.
 All files meant to be scaffolded are stored into a `template` folder inside each AE folder
-`test-project` contains a Quasar project with some automatic tests against testing AEs themself. Check out existing specific AE READMEs for additional information
+`test-vite-app-v3` (Vite) and `test-webpack-app-v4` (Webpack) contain test projects with automatic tests against the testing AEs themselves. Check out existing specific AE READMEs for additional information

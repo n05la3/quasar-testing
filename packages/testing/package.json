@@ -11,16 +11,15 @@
   "main": "src/index.js",
   "scripts": {
     "build:local": "rimraf node_modules",
-    "deploy:beta": "yarn publish --tag beta",
-    "deploy:latest": "yarn publish --tag latest"
+    "deploy:beta": "pnpm publish --tag beta",
+    "deploy:latest": "pnpm publish --tag latest"
   },
   "publishConfig": {
     "access": "public"
   },
   "engines": {
     "node": ">= 12.22.1",
-    "npm": ">= 6.14.12",
-    "yarn": ">= 1.17.3"
+    "npm": ">= 6.14.12"
   },
   "dependencies": {
     "chalk": "^4.1.1",

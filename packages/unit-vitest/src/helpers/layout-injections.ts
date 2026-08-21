@@ -1,4 +1,5 @@
 import { vi } from 'vitest';
+import type { Mock } from 'vitest';
 import { ref } from 'vue';
 
 /**
@@ -19,8 +20,8 @@ export function qLayoutInjections() {
       rows: ref({ top: 'lHh', middle: 'Lpr', bottom: 'lff' }),
       height: ref(900),
       instances: {},
-      update: vi.fn(),
-      animate: vi.fn(),
+      update: vi.fn() as Mock,
+      animate: vi.fn() as Mock,
       totalWidth: ref(1200),
       scroll: ref({ position: 0, direction: 'up' }),
       scrollbarWidth: ref(125),

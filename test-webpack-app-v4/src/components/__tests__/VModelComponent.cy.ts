@@ -53,9 +53,11 @@ describe('VModelComponent', () => {
     const model = ref('Quasar');
 
     cy.mount(VModelComponent, {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       props: {
-        ...vModelAdapter(model),
+        ...(vModelAdapter(model) as {
+          modelValue: string;
+          'onUpdate:modelValue': (emittedValue: string) => void;
+        }),
       },
     });
 
