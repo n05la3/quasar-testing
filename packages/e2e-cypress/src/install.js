@@ -6,6 +6,7 @@
 
 const { appendFileSync } = require('fs');
 const { join } = require('path');
+const { createRequire } = require('module');
 const { enforcedDevServerPort } = require('./shared');
 
 /**
@@ -65,38 +66,49 @@ let extendPackageJson = {
 // This breaks the resolution logic of `api.hasPackage('eslint', '^9.0.0')` in the context of the AE install script within test projects
 // You'll need to manually set `eslint-plugin-cypress` to v4 in that case when running `sync:invoke:cypress` script
 function getEslintPluginCypressDependency(api) {
+  // eslint-plugin-cypress v3 supports ESLint 7+ and eslint-plugin-cypress v4 supports ESLint 9+,
+  // so eslint 9+ projects scaffold with v4, older ones with v3.
+  // v5+ is avoided because it drops support for non-flat ESLint configs.
+  // `api.hasPackage('eslint', ...)` is unreliable in install context (engine resolution
+  // walks the AE package dir, not the host app), so resolve the app's eslint directly.
+  let eslintMajor = 0;
+
+  try {
+    const eslintVersion = createRequire(join(process.cwd(), 'package.json'))(
+      'eslint/package.json'
+    ).version;
+    eslintMajor = Number(eslintVersion.split('.')[0]) || 0;
+  } catch {}
+
   return {
     devDependencies: {
-      // eslint-plugin-cypress v3 doesn't support ESLint v9 and eslint-plugin-cypress v4 only supports ESLint v9,
-      // So if the user has ESLint v9 installed, then we will scaffold with eslint-plugin-cypress v4, otherwise we will use v3
-      // We cannot use v5.x of eslint-plugin-cypress because it drops support for non-flat ESLint configs
-      'eslint-plugin-cypress': api.hasPackage('eslint', '^9.0.0')
-        ? '^4.3.0'
-        : '^3.6.0',
+      'eslint-plugin-cypress': eslintMajor >= 9 ? '^4.3.0' : '^3.6.0',
     },
   };
 }
 
 module.exports = async function (api) {
   api.compatibleWith('quasar', '^2.0.0');
-  if (api.hasVite) {
-    // PromptsAPI and hasTypescript are only available from v1.6.0 onwards
-    api.compatibleWith('@quasar/app-vite', '^1.6.0 || ^2.0.0');
+
+  if (api.hasWebpack === true) {
+    // PromptsAPI and hasTypescript are only available from v3.11.0 onwards
+    api.compatibleWith('@quasar/app-webpack', '^3.11.0 || ^4.0.0');
+  } else {
+    api.compatibleWith('@quasar/app-vite', '^3.0.0');
 
     // We cannot run `enforcedCypress15Vite8Compatibility` on install
     // It would execute a compatibility check for Cypress before we have a chance to add it as a dependency,
     // which would cause the installation to fail and run the DX
     // We delay that check to the index.js file, which runs on each dev/build
     // The DX isn't optimal, but it's the best we can do without adding Cypress as a dependency before installation
-  } else if (api.hasWebpack) {
-    // PromptsAPI and hasTypescript are only available from v3.11.0 onwards
-    api.compatibleWith('@quasar/app-webpack', '^3.11.0 || ^4.0.0');
   }
 
-  const devServerPort = api.prompts.port ?? enforcedDevServerPort;
+  const devServerPort = Number(api.prompts.port) || enforcedDevServerPort;
   const shouldSupportTypeScript = await api.hasTypescript();
   const shouldAddCodeCoverage =
-    api.prompts.options.includes('code-coverage') && api.hasVite;
+    api.prompts.options.includes('code-coverage') && api.hasWebpack !== true;
+  const shouldSupportTypeScriptAndVite =
+    shouldSupportTypeScript && api.hasWebpack !== true;
   const shouldUpdateModuleResolution =
     api.hasPackage('typescript', '^5.0.0') &&
     (api.hasPackage('@quasar/app-vite', '^2.0.0') ||
@@ -135,10 +147,11 @@ module.exports = async function (api) {
   api.render(`./templates/${shouldSupportTypeScript ? '' : 'no-'}typescript`, {
     devServerPort,
     shouldAddCodeCoverage,
-    shouldSupportTypeScriptAndVite: shouldSupportTypeScript && api.hasVite,
+    shouldSupportTypeScriptAndVite,
     shouldUpdateModuleResolution,
     // See https://github.com/quasarframework/quasar-testing/issues/379
-    requiresPublicPath: api.hasVite && api.hasPackage('vite', '>=5'),
+    requiresPublicPath:
+      api.hasWebpack !== true && api.hasPackage('vite', '>=5'),
   });
 
   const scripts = {
@@ -164,13 +177,13 @@ module.exports = async function (api) {
     appendFileSync(gitignorePath, '\n.nyc_output\ncoverage/\n');
   }
 
-  if (api.prompts.options.includes('code-coverage') && api.hasWebpack) {
+  if (api.prompts.options.includes('code-coverage') && api.hasWebpack === true) {
     api.onExitLog(
       "Code coverage isn't supported for Webpack yet. Please use Vite CLI instead.",
     );
   }
 
-  if (await api.hasLint()) {
+  if (api.hasPackage('eslint', '>=8')) {
     api.onExitLog(
       'Check out https://github.com/quasarframework/quasar-testing/tree/dev/packages/e2e-cypress to see how to add proper Cypress linting configuration to your project.',
     );

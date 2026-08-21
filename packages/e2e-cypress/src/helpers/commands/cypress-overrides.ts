@@ -93,7 +93,11 @@ export function registerCypressOverwrites() {
     },
   );
 
-  chai.Assertion.overwriteProperty('checked', (_super: () => void) => {
+  chai.Assertion.overwriteProperty('checked', (...args: unknown[]) => {
+    // Cypress bundled chai typings don't model the `_super` argument,
+    // but the runtime still passes it as the first argument
+    const _super = args[0] as () => void;
+
     return function (
       this: typeof chai.Assertion & { __flags: { negate?: boolean } },
     ) {

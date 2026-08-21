@@ -1,7 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "cct-dev-server"
+    "outDir": "cct-dev-server",
+    // Must stay CJS for Cypress to require it, but the dynamic import of
+    // the ESM-only '@quasar/app-vite/testing' export needs a real import()
+    // statement, which TS only preserves under module nodenext
+    "module": "nodenext",
+    "moduleResolution": "nodenext"
   },
-  "include": ["src/helpers/cct-dev-server/index.ts"]
+  "include": ["src/helpers/cct-dev-server/index.ts", "src/helpers/cct-dev-server/webpack-testing.d.ts"]
 }

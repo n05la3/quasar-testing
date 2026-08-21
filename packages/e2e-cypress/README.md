@@ -300,9 +300,18 @@ Check out more examples [here](./src/templates/typescript/src/components/___test
 
 ### Testing the AE
 
+The AE is tested against both a Vite and a Webpack app.
+
 ```sh
-cd test-project-webpack # or "cd test-project-vite" or "cd test-project-app"
-yarn sync:cypress # or "yarn sync:all", if it's the first time you run this command
-yarn test:e2e:ci # check if e2e tests still work with the local version of the AE
-yarn test:component:ci # check if component tests still work with the local version of the AE
+cd test-vite-app-v3 # Vite
+pnpm sync:cypress # or "pnpm sync:all", if it's the first time you run this command
+pnpm test:e2e:ci # check if e2e tests still work with the local version of the AE
+pnpm test:component:ci # check if component tests still work with the local version of the AE
+```
+
+```sh
+cd test-webpack-app-v4 # Webpack
+pnpm sync:cypress # or "pnpm sync:all", if it's the first time you run this command
+pnpm test:e2e:ci # check if e2e tests still work with the local version of the AE
+pnpm test:component:ci # check if component tests still work with the local version of the AE
 ```

@@ -2,7 +2,7 @@ module.exports.enforcedDevServerPort = 8080;
 
 // app-vite 2.5.0 switches to Vite 8, which requires Cypress 15.14+ for component testing support
 // See https://github.com/quasarframework/quasar-testing/issues/412
-const quasarAppViteUsingVite8 = '^2.5.0';
+const quasarAppViteUsingVite8 = '^2.5.0 || ^3.0.0';
 
 module.exports.enforcedCypress15Vite8Compatibility = (api) => {
     // app-vite v2.4.x uses Vite 7, which is not supported by Cypress AE v6.3+
